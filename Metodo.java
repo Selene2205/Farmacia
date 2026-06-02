@@ -6,8 +6,9 @@ import EXITO.metodo;
 
 public class Metodo {
     public int PedirDimension(Scanner sc) {
+        Metodo m = new Metodo();
         System.out.println("Ingrese la cantidad de medicamentos: ");
-        return sc.nextInt();
+        return m.ValidarEntero(sc);
     }
 
     public OBJ[][] IngresarMedicamentos(OBJ[][] n, Scanner sc) {
@@ -51,10 +52,11 @@ public class Metodo {
     }
 
     public OBJ[][] VenderMedicamento(OBJ[][] n, Scanner sc) {
+        Metodo m = new Metodo();
         System.out.println("Ingrese el código del producto que va vender");
         String c = sc.next();
         System.out.println("Ingrese la cantidad que desea vender");
-        int ca = sc.nextInt();
+        int ca = m.ValidarEntero(sc);
         for (int i = 0; i < n.length; i++) {
             for (int j = 0; j < n.length; j++) {
                 if (n[i][j].getCodigoMedicamento().equals(c)) {
@@ -69,6 +71,7 @@ public class Metodo {
     }
 
     public OBJ[][] ActualizarInformacion(OBJ[][] n, Scanner sc) {
+        Metodo m = new Metodo();
         System.out.println("Ingrese el código del medicamento para actualizar: ");
         String c = sc.next();
         int b;
@@ -82,7 +85,7 @@ public class Metodo {
                         switch (b) {
                             case 1:
                                 System.out.println("Ingrese la cantidad del medicamento: ");
-                                n[i][j].setCantidadDisponible(sc.nextInt());
+                                n[i][j].setCantidadDisponible(m.ValidarEntero(sc));
                                 break;
                             case 2:
                                 System.out.println("Ingrese el precio del medicamento: ");
@@ -109,11 +112,17 @@ public class Metodo {
     }
 
     public int ValidarEntero(Scanner sc) {
-        while (!sc.hasNextInt()) {
-            System.out.println("Por favor digitar un número entero: ");
-            sc.next();
-        }
-        return sc.nextInt();
+        int numero;
+        do {
+            while (!sc.hasNextInt()) {
+                System.out.println("Por favor digitar un número entero: ");
+                sc.next();
+            }
+            numero = sc.nextInt();
+            if (numero < 0) {
+                System.out.println("Por favor digitar un número entero positivo: ");
+            }
+        } while (numero < 0);
+        return numero;
     }
-
 }
